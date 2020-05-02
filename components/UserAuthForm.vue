@@ -32,8 +32,8 @@
         showPassword: false,
         hasName: false,
         userInfo: {
-          email: '',
-          password: ''
+          email: 'reiallenramos@gmail.com',
+          password: 'password'
         },
         ...validations
       }

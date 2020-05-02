@@ -11,8 +11,10 @@ export default {
     UserAuthForm
   },
   methods: {
-    loginUser() {
-      alert('You pressed a button')
+    loginUser(logininfo) {
+      this.$auth.loginWith('local', {
+        data: logininfo
+      })
     }
   }
 }
