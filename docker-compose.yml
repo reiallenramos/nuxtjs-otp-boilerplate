@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+      args:
+      - BUILD_MODE=development
+    command: npm run nuxt-dev
+    depends_on:
+      - redis
+      - mongo
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - JWT_SECRET=thiscouldbeanything
+      - REDIS_OTP_URI=redis://redis:6379/0
+      - OTP_DURATION=300
+      - MONGO_URI=mongodb://root:example@mongo:27017
+      - HOST=0.0.0.0
+  redis:
+    image: redis:5.0.3-alpine
+    ports:
+      - "6379:6379"
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
