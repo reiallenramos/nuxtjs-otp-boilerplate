@@ -2,6 +2,8 @@ const express = require('express');
 const dotenv = require("dotenv");
 const jwt = require('jsonwebtoken');
 const mailer = require('../../../util/email')
+const otp = require('../../../util/otp')
+const redis = require('../../../redis')
 
 dotenv.config();
 
@@ -15,6 +17,7 @@ function generateAccessToken(payload) {
 }
 
 const defaultOTP = '111111';
+const OTP_DURATION = 5 * 60;
 
 const users = [
   {
@@ -51,17 +54,34 @@ const authenticateJWT = (req, res, next) => {
 
 router.post('/', (req, res) => {
   const { email, otp } = req.body;
-  if (otp === defaultOTP) {
-    const user = users.find(u => { return u.email === email });
-    if (user) {
-      const token = generateAccessToken({ email: email })
-      res.json({ token });
-    } else {
-      res.send('User not found. Please register')
+  redis.otpClient.get(email, (redisGetError, otpString) => {
+    if (redisGetError) {
+      console.log(`Error retrieving OTP:\t${redisGetError}`)
+      res.serverError(
+        jsonMessage('Error retrieving OTP. Please try again later.')
+      )
+      return
     }
-  } else {
-    res.send('Incorrect OTP');
-  }
+
+    if (!otpString) {
+      res.unauthorized(jsonMessage('OTP expired/not found.'))
+      return
+    }
+
+    let isOTPValidated = otp == JSON.parse(otpString);
+
+    if (isOTPValidated) {
+      const user = users.find(u => { return u.email === email });
+      if (user) {
+        const token = generateAccessToken({ email: email })
+        res.json({ token });
+      } else {
+        res.send('User not found. Please register')
+      }
+    } else {
+      res.send('Incorrect OTP');
+    }
+  });
 })
 
 router.get('/user', authenticateJWT, (req, res) => {
@@ -75,7 +95,15 @@ router.get('/user', authenticateJWT, (req, res) => {
 })
 
 router.post('/generateOTP', (req, res) => {
-  mailer.sendOTP(req.body.email);
+  let email = req.body.email;
+  let otpObject = otp.generate();
+  mailer.sendOTP(email, otpObject);
+  redis.otpClient.set(
+    email,
+    JSON.stringify(otpObject),
+    'EX',
+    OTP_DURATION
+    );
   res.send('OTP sent to email')
 })
 

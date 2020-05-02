@@ -1,6 +1,5 @@
 const nodemailer  = require('nodemailer')
 const dotenv = require('dotenv');
-const otp = require('./otp')
 
 dotenv.config();
 
@@ -16,11 +15,12 @@ var mailOptions = {
   from: process.env.EMAIL_STRING,
   to: '',
   subject: 'OTP',
-  text: `Your OTP is ${otp.generate()}`
+  text: ''
 }
 
-function sendOTP(recipientEmail) {
+function sendOTP(recipientEmail, otp) {
   mailOptions.to = recipientEmail;
+  mailOptions.text = `Your OTP is ${otp}`
   transporter.sendMail(mailOptions, function(err, info) {
     if(err)
       console.log(err)
