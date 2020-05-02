@@ -12,9 +12,11 @@ export default {
   },
   methods: {
     loginUser(logininfo) {
+      let onSuccess = () => { this.$router.push('inspire') };
+      let onError = () => { alert('oops') };
       this.$auth.loginWith('local', {
         data: logininfo
-      })
+      }).then(onSuccess, onError);
     }
   }
 }

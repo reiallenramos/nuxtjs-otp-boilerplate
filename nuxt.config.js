@@ -90,8 +90,8 @@ module.exports = {
       local: {
         endpoints: {
           login: { url: '/api/auth/sessions', method: 'post', propertyName: 'token' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+          logout: { url: '/api/auth/logout', method: 'delete' },
+          user: { url: '/api/auth/sessions/user', method: 'get', propertyName: 'user' }
         }
       }
     }
