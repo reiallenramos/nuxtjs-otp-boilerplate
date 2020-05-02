@@ -1,5 +1,6 @@
 <template>
   <v-app dark>
+    <Snackbar />
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -56,7 +57,12 @@
 </template>
 
 <script>
+import Snackbar from '~/components/Snackbar'
+
 export default {
+  components: {
+    Snackbar
+  },
   data () {
     return {
       clipped: false,
