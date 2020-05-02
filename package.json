@@ -18,7 +18,9 @@
     "@nuxtjs/dotenv": "^1.4.0"
   },
   "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
     "nodemon": "^1.18.9",
-    "@nuxtjs/vuetify": "^1.0.0"
+    "pug": "^2.0.4",
+    "pug-plain-loader": "^1.0.0"
   }
 }
