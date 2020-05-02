@@ -45,13 +45,16 @@ const authenticateJWT = (req, res, next) => {
 
 router.post('/', (req, res) => {
   const { email, otp } = req.body;
-  const user = users.find(u => { return u.email === email});
-
-  if (user) {
-    const token = generateAccessToken({ email: email })
-    res.json({ token });
+  if (otp === defaultOTP) {
+    const user = users.find(u => { return u.email === email });
+    if (user) {
+      const token = generateAccessToken({ email: email })
+      res.json({ token });
+    } else {
+      res.send('User not found. Please register')
+    }
   } else {
-    res.send('Email or password incorrect');
+    res.send('Incorrect OTP');
   }
 })
 

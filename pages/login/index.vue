@@ -13,15 +13,10 @@ export default {
     UserAuthForm
   },
   methods: {
-    loginUser(logininfo) {
-      let onSuccess = () => { this.$router.push('inspire') };
-      let onError = () => { alert('oops') };
-      this.$auth.loginWith('local', {
-        data: logininfo
-      }).then(onSuccess, onError);
-    },
     generateOTP(loginInfo) {
-      let onSuccess = () => { this.$router.push('inspire') };
+      alert(loginInfo.email)
+      this.$store.commit("setEmail", loginInfo.email);
+      let onSuccess = () => { this.$router.push({name: 'login-otp'}) };
       let onError = () => { alert('oops') };
       axios.post('/api/auth/sessions/generateOTP')
         .then(onSuccess, onError)
