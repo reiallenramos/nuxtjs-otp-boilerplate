@@ -1,11 +1,13 @@
 <template lang="pug">
   v-container
     h1 Login
-    UserAuthForm(buttonText="Login" :submitForm="loginUser")
+    UserAuthForm(buttonText="Generate OTP" :submitForm="generateOTP")
 </template>
 
 <script>
 import UserAuthForm from '@/components/UserAuthForm'
+import axios from 'axios'
+
 export default {
   components: {
     UserAuthForm
@@ -17,6 +19,12 @@ export default {
       this.$auth.loginWith('local', {
         data: logininfo
       }).then(onSuccess, onError);
+    },
+    generateOTP(loginInfo) {
+      let onSuccess = () => { this.$router.push('inspire') };
+      let onError = () => { alert('oops') };
+      axios.post('/api/auth/sessions/generateOTP')
+        .then(onSuccess, onError)
     }
   }
 }

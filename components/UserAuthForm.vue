@@ -9,14 +9,14 @@
                   label="Email" 
                   :rules="[required('email'), emailFormat()]"/>
 
-    <v-text-field v-model="userInfo.password"
+    <!-- <v-text-field v-model="userInfo.password"
                   label="Password"
                   :type="showPassword ? 'text' : 'password'" 
                   :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                   @click:append="showPassword = !showPassword"
                   counter=true
                   :rules="[required('password'), minLength('password', 8)]"
-                  />
+                  /> -->
 
     <v-btn @click="submitForm(userInfo)" :disabled="!valid">{{ buttonText }}</v-btn>
   </v-form>

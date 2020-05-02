@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require("dotenv");
 const jwt = require('jsonwebtoken');
+const mailer = require('../../../util/email')
 
 dotenv.config();
 
@@ -13,14 +14,14 @@ function generateAccessToken(payload) {
   return jwt.sign(payload, accessTokenSecret, { expiresIn: '1800s' });
 }
 
+const defaultOTP = '111111';
+
 const users = [
   {
     email: 'reiallenramos@gmail.com',
-    password: 'password'
   },
   {
     email: 'admin@admin.com',
-    password: 'password'
   }
 ]
 
@@ -43,8 +44,8 @@ const authenticateJWT = (req, res, next) => {
 };
 
 router.post('/', (req, res) => {
-  const { email, password } = req.body;
-  const user = users.find(u => { return u.email === email && u.password === password });
+  const { email, otp } = req.body;
+  const user = users.find(u => { return u.email === email});
 
   if (user) {
     const token = generateAccessToken({ email: email })
@@ -62,6 +63,11 @@ router.get('/user', authenticateJWT, (req, res) => {
       email: user.email
     }
   })
+})
+
+router.post('/generateOTP', (req, res) => {
+  mailer.sendOTP();
+  res.send('fdfd')  
 })
 
 router.delete('/', (req, res) => {
