@@ -19,7 +19,7 @@
     },
     methods: {
       loginUser(otp) {
-        let onSuccess = () => { this.$router.push('inspire') };
+        let onSuccess = () => { alert('OTP validated!')};
         let onError = () => { alert('oops') };
         this.$auth.loginWith('local', {
           data: {

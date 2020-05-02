@@ -14,11 +14,12 @@ export default {
   },
   methods: {
     generateOTP(loginInfo) {
-      alert(loginInfo.email)
       this.$store.commit("setEmail", loginInfo.email);
       let onSuccess = () => { this.$router.push({name: 'login-otp'}) };
       let onError = () => { alert('oops') };
-      axios.post('/api/auth/sessions/generateOTP')
+      axios.post('/api/auth/sessions/generateOTP', {
+        email: loginInfo.email
+      })
         .then(onSuccess, onError)
     }
   }

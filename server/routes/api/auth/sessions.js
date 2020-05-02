@@ -22,6 +22,12 @@ const users = [
   },
   {
     email: 'admin@admin.com',
+  },
+  {
+    email: 'iscovid19over@gmail.com'
+  },
+  {
+    email: 'rei.ramos@obf.ateneo.edu'
   }
 ]
 
@@ -69,8 +75,8 @@ router.get('/user', authenticateJWT, (req, res) => {
 })
 
 router.post('/generateOTP', (req, res) => {
-  mailer.sendOTP();
-  res.send('fdfd')  
+  mailer.sendOTP(req.body.email);
+  res.send('OTP sent to email')
 })
 
 router.delete('/', (req, res) => {

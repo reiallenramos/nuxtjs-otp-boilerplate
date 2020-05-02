@@ -8,14 +8,15 @@ var transporter = nodemailer.createTransport({
   }
 })
 
-const mailOptions = {
+var mailOptions = {
   from: 'reiallenramos@gmail.com',
-  to: 'reiallenramos@gmail.com',
+  to: '',
   subject: 'test',
   text: 'Hello world!'
 }
 
-function sendOTP() {
+function sendOTP(recipientEmail) {
+  mailOptions.to = recipientEmail;
   transporter.sendMail(mailOptions, function(err, info) {
     if(err)
       console.log(err)
