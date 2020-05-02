@@ -50,6 +50,14 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <div v-if="$auth.loggedIn">
+        {{ $auth.user.email }}
+        <v-btn text to="/">Logout</v-btn>
+      </div>
+      <div v-else>
+        <v-btn text to="/login">Login</v-btn>
+        <v-btn text to="/register">Register</v-btn>
+      </div>
       <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
