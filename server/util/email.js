@@ -1,4 +1,5 @@
 const nodemailer  = require('nodemailer')
+const otp = require('./otp')
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -11,8 +12,8 @@ var transporter = nodemailer.createTransport({
 var mailOptions = {
   from: 'reiallenramos@gmail.com',
   to: '',
-  subject: 'test',
-  text: 'Hello world!'
+  subject: 'OTP',
+  text: `Your OTP is ${otp.generate()}`
 }
 
 function sendOTP(recipientEmail) {
