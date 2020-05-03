@@ -6,7 +6,6 @@
 
 <script>
 import UserAuthForm from '@/components/UserAuthForm'
-import axios from 'axios'
 
 export default {
   components: {
@@ -20,7 +19,7 @@ export default {
         this.$router.push({name: 'login-otp'});
       };
       let onError = (res) => { this.$store.commit("snackbar/setSnack", res.data) };
-      axios.post('/api/auth/sessions/generateOTP', {
+      this.$axios.post('/api/auth/sessions/generateOTP', {
         email: loginInfo.email
       })
         .then(onSuccess, onError)

@@ -7,7 +7,6 @@
 
 <script>
 import UserAuthForm from '@/components/UserAuthForm'
-import axios from 'axios'
 
 export default {
   data() {
@@ -22,7 +21,7 @@ export default {
     registerUser() {
       let onSuccess = () => { this.$store.commit("snackbar/setSnack", "Success. Please Login.") };
       let onError = () => { this.$store.commit("snackbar/setSnack", "Invalid email.") };
-      axios.post('/api/register', {
+      this.$axios.post('/api/register', {
         email: this.email
       }).then(onSuccess, onError)
     }
