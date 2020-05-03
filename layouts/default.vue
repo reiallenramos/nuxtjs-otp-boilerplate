@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     logout() {
-      let onSuccess = (res) => { this.$store.commit("snackbar/setSnack", res) };
+      let onSuccess = () => { this.$store.commit("snackbar/setSnack", "Successfully logged out."); };
       let onError = (res) => { this.$store.commit("snackbar/setSnack", res) };
       this.$auth.logout().then(onSuccess, onError);
     }

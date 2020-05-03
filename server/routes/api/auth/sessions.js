@@ -92,11 +92,9 @@ router.post('/generateOTP', (req, res) => {
   res.send('OTP sent to email')
 })
 
-router.delete('/', (req, res) => {
-  const { token } = req.body;
-  refreshTokens = refreshTokens.filter(token => t !== token);
-
-  res.send("Logout successful");
+router.delete('/logout', (req, res) => {
+  // no need to do anything here. Just delete the token in the browser
+  res.send({ message: 'ok' })
 })
 
 module.exports = router;
