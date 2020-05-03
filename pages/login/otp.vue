@@ -20,7 +20,7 @@
     methods: {
       loginUser(otp) {
         let onSuccess = () => { this.$store.commit("snackbar/setSnack", "OTP validated!") };
-        let onError = () => { this.$store.commit("snackbar/setSnack", "Invalid OTP") };
+        let onError = (message) => { this.$store.commit("snackbar/setSnack", message) };
         this.$auth.loginWith('local', {
           data: {
             otp: otp,

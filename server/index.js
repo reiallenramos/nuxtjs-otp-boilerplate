@@ -15,8 +15,10 @@ config.dev = process.env.NODE_ENV !== 'production'
 app.use(morgan('tiny'))
 
 const sessions = require('./routes/api/auth/sessions');
+const register = require('./routes/register');
 
 app.use('/api/auth/sessions', sessions);
+app.use('/api/register', register);
 
 db.dbInit();
 

@@ -4,6 +4,7 @@ const mailer = require('../../../util/email')
 const otp = require('../../../util/otp')
 const redis = require('../../../redis')
 const config = require('../../../config')
+const db = require('../../../db')
 
 const router= express.Router();
 
@@ -34,6 +35,8 @@ const authenticateJWT = (req, res, next) => {
 
 router.post('/', (req, res) => {
   const { email, otp } = req.body;
+  console.log(email)
+  console.log(otp)
   redis.otpClient.get(email, (redisGetError, otpString) => {
     if (redisGetError) {
       console.log(`Error retrieving OTP:\t${redisGetError}`)
@@ -51,13 +54,15 @@ router.post('/', (req, res) => {
     let isOTPValidated = otp == JSON.parse(otpString);
 
     if (isOTPValidated) {
-      const user = users.find(u => { return u.email === email });
-      if (user) {
-        const token = generateAccessToken({ email: email })
-        res.json({ token });
-      } else {
-        res.send('User not found. Please register')
-      }
+      db.findDocuments('users_directory', (users) => {
+        const user = users.find(u => { return u.email === email });
+        if (user) {
+          const token = generateAccessToken({ email: email })
+          res.json({ token });
+        } else {
+          res.send('User not found. Please register')
+        }
+      })
     } else {
       res.send('Incorrect OTP');
     }
@@ -66,12 +71,14 @@ router.post('/', (req, res) => {
 
 router.get('/user', authenticateJWT, (req, res) => {
   const { email } = req.user;
-  const user = users.find(u => { return u.email === email});
-  res.send({
-    user: {
-      email: user.email
-    }
-  })
+  db.findDocuments('users_directory', (users) => {
+    const user = users.find(u => { return u.email === email});
+    res.send({
+      user: {
+        email: user.email
+      }
+    })
+  });
 })
 
 router.post('/generateOTP', (req, res) => {
