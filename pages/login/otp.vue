@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container
-    v-form
-      v-text-field(v-model="otp" label="Enter OTP")
+    v-form(v-on:submit.prevent="")
+      v-text-field(v-model="otp" label="Enter OTP" @keyup.enter="loginUser(otp)")
       v-btn(@click="loginUser(otp)") Validate
 </template>
 
@@ -20,7 +20,7 @@
     methods: {
       loginUser(otp) {
         let onSuccess = () => { this.$store.commit("snackbar/setSnack", "OTP validated!") };
-        let onError = (message) => { this.$store.commit("snackbar/setSnack", message) };
+        let onError = (res) => { this.$store.commit("snackbar/setSnack", res) };
         this.$auth.loginWith('local', {
           data: {
             otp: otp,

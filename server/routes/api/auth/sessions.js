@@ -35,8 +35,6 @@ const authenticateJWT = (req, res, next) => {
 
 router.post('/', (req, res) => {
   const { email, otp } = req.body;
-  console.log(email)
-  console.log(otp)
   redis.otpClient.get(email, (redisGetError, otpString) => {
     if (redisGetError) {
       console.log(`Error retrieving OTP:\t${redisGetError}`)

@@ -35,7 +35,7 @@
       <v-spacer />
       <div v-if="$auth.loggedIn">
         {{ $auth.user.email }}
-        <v-btn text @click="$auth.logout()">Logout</v-btn>
+        <v-btn text @click="logout">Logout</v-btn>
       </div>
       <div v-else>
         <v-btn text to="/login">Login</v-btn>
@@ -84,6 +84,13 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Vuetify.js'
+    }
+  },
+  methods: {
+    logout() {
+      let onSuccess = (res) => { this.$store.commit("snackbar/setSnack", res) };
+      let onError = (res) => { this.$store.commit("snackbar/setSnack", res) };
+      this.$auth.logout().then(onSuccess, onError);
     }
   }
 }

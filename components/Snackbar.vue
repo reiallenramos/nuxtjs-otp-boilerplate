@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-snackbar(v-model="show" :top="true") {{ message }}
+  v-snackbar(v-model="show" :bottom="true") {{ message }}
 </template>
 
 <script>

@@ -15,8 +15,11 @@ export default {
   methods: {
     generateOTP(loginInfo) {
       this.$store.commit("setEmail", loginInfo.email);
-      let onSuccess = () => { this.$router.push({name: 'login-otp'}) };
-      let onError = () => { alert('oops') };
+      let onSuccess = (res) => {
+        this.$store.commit("snackbar/setSnack", res.data);
+        this.$router.push({name: 'login-otp'});
+      };
+      let onError = (res) => { this.$store.commit("snackbar/setSnack", res.data) };
       axios.post('/api/auth/sessions/generateOTP', {
         email: loginInfo.email
       })

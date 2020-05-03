@@ -1,23 +1,9 @@
 <template>
-  <v-form v-model="valid">
-    <v-text-field v-model="userInfo.name" 
-                  label="Name" 
-                  :rules="[required('name')]"
-                  v-if="hasName" />
-
+  <v-form v-model="valid" v-on:submit.prevent="">
     <v-text-field v-model="userInfo.email" 
-                  label="Email" 
+                  label="Email"
+                  @keyup.enter="submitForm(userInfo)"
                   :rules="[required('email'), emailFormat()]"/>
-
-    <!-- <v-text-field v-model="userInfo.password"
-                  label="Password"
-                  :type="showPassword ? 'text' : 'password'" 
-                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                  @click:append="showPassword = !showPassword"
-                  counter=true
-                  :rules="[required('password'), minLength('password', 8)]"
-                  /> -->
-
     <v-btn @click="submitForm(userInfo)" :disabled="!valid">{{ buttonText }}</v-btn>
   </v-form>
 </template>
@@ -31,14 +17,12 @@
         valid: false,
         showPassword: false,
         userInfo: {
-          name: '',
-          email: 'reiallenramos@gmail.com',
-          password: 'password'
+          email: '',
         },
         ...validations
       }
     },
-    props: ["submitForm", "buttonText", "hasName"]
+    props: ["submitForm", "buttonText"]
   }
 </script>
 
