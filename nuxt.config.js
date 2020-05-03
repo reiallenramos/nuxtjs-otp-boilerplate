@@ -1,7 +1,10 @@
 const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
-  mode: 'spa',
+  mode: 'universal',
+  server: {
+    host: process.env.SERVER_HOST
+  },
   /*
   ** Headers of the page
   */
@@ -52,7 +55,7 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://localhost:3000/'
+    baseURL: `http://${process.env.SERVER_HOST}:3000/`
   },
   /*
   ** vuetify module configuration
