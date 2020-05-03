@@ -8,6 +8,8 @@ WORKDIR /usr/src/nuxt-app
 
 EXPOSE 3000
 
+ENV HOST 0.0.0.0
+
 # copy the app, note .dockerignore
 COPY . /usr/src/nuxt-app/
 RUN npm install

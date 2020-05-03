@@ -22,7 +22,7 @@ services:
       - MONGO_URI=mongodb://root:example@mongo:27017
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
-      - SERVER_HOST=0.0.0.0 # change me
+      - HOST=0.0.0.0
   redis:
     image: redis:5.0.3-alpine
     ports:

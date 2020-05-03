@@ -11,7 +11,7 @@ const EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
 const MONGO_URI = process.env.MONGO_URI;
 const MONGO_INITDB_ROOT_USERNAME = process.env.MONGO_INITDB_ROOT_USERNAME;
 const MONGO_INITDB_ROOT_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD;
-const SERVER_HOST = process.env.SERVER_HOST;
+const HOST = process.env.HOST;
 
 module.exports = {
   OTP_DURATION,
@@ -23,5 +23,5 @@ module.exports = {
   MONGO_URI,
   MONGO_INITDB_ROOT_USERNAME,
   MONGO_INITDB_ROOT_PASSWORD,
-  SERVER_HOST,
+  HOST,
 }
