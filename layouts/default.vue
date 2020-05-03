@@ -24,6 +24,12 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
+
+      <template v-slot:append v-if="$auth.loggedIn">
+        <div class="pa-2">
+          <v-btn block @click="logout">Logout<v-icon>mdi-logout-variant</v-icon></v-btn>
+        </div>
+      </template>
     </v-navigation-drawer>
     <v-app-bar
       :clipped-left="clipped"
@@ -35,7 +41,6 @@
       <v-spacer />
       <div v-if="$auth.loggedIn">
         {{ $auth.user.email }}
-        <v-btn text @click="logout">Logout</v-btn>
       </div>
       <div v-else>
         <v-btn text to="/login">Login</v-btn>
