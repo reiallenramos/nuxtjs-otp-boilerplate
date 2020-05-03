@@ -1,12 +1,10 @@
 const redis = require('redis');
-const dotenv = require('dotenv');
-
-dotenv.config()
+const config = require('./config');
 
 // For storing OTPs
 const otpClient = redis
   .createClient({
-    url: process.env.REDIS_OTP_URI,
+    url: config.REDIS_OTP_URI,
   })
   .on('connect', () => {
     console.log('otpClient connected')

@@ -1,23 +1,18 @@
 const express = require('express');
-const dotenv = require("dotenv");
 const jwt = require('jsonwebtoken');
 const mailer = require('../../../util/email')
 const otp = require('../../../util/otp')
 const redis = require('../../../redis')
-
-dotenv.config();
+const config = require('../../../config')
 
 const router= express.Router();
 
-const accessTokenSecret = process.env.TOKEN_SECRET;
-
 function generateAccessToken(payload) {
   // expires after half and hour (1800 seconds = 30 minutes)
-  return jwt.sign(payload, accessTokenSecret, { expiresIn: '1800s' });
+  return jwt.sign(payload, config.JWT_SECRET, { expiresIn: '1800s' });
 }
 
 const defaultOTP = '111111';
-const OTP_DURATION = 5 * 60;
 
 const users = [
   {
@@ -39,7 +34,7 @@ const authenticateJWT = (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(' ')[1];
 
-    jwt.verify(token, accessTokenSecret, (err, user) => {
+    jwt.verify(token, config.JWT_SECRET, (err, user) => {
       if (err) {
         return res.sendStatus(403);
       }
@@ -102,7 +97,7 @@ router.post('/generateOTP', (req, res) => {
     email,
     JSON.stringify(otpObject),
     'EX',
-    OTP_DURATION
+    config.OTP_DURATION
     );
   res.send('OTP sent to email')
 })

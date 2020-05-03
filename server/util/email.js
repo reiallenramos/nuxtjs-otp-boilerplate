@@ -1,18 +1,16 @@
 const nodemailer  = require('nodemailer')
-const dotenv = require('dotenv');
-
-dotenv.config();
+const config = require('../config')
 
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.EMAIL_STRING,
-    pass: process.env.EMAIL_PASSWORD,
+    user: config.EMAIL_STRING,
+    pass: config.EMAIL_PASSWORD,
   }
 })
 
 var mailOptions = {
-  from: process.env.EMAIL_STRING,
+  from: config.EMAIL_STRING,
   to: '',
   subject: 'OTP',
   text: ''
