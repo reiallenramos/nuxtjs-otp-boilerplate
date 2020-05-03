@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const bodyParser = require('body-parser');
+const db = require('./db')
 
 app.use(bodyParser.json());
 
@@ -16,6 +17,8 @@ app.use(morgan('tiny'))
 const sessions = require('./routes/api/auth/sessions');
 
 app.use('/api/auth/sessions', sessions);
+
+db.dbInit();
 
 async function start () {
   // Init Nuxt.js

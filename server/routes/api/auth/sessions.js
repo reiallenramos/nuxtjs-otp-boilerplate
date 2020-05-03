@@ -14,21 +14,6 @@ function generateAccessToken(payload) {
 
 const defaultOTP = '111111';
 
-const users = [
-  {
-    email: 'reiallenramos@gmail.com',
-  },
-  {
-    email: 'admin@admin.com',
-  },
-  {
-    email: 'iscovid19over@gmail.com'
-  },
-  {
-    email: 'rei.ramos@obf.ateneo.edu'
-  }
-]
-
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
