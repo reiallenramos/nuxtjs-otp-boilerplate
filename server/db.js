@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
 const config = require('./config')
-const url = `mongodb://${config.MONGO_INITDB_ROOT_USERNAME}:${config.MONGO_INITDB_ROOT_PASSWORD}@localhost:27017`;
+const url = config.MONGO_URI;
 
 function dbInit() {
   MongoClient.connect(url, function (err, client) {

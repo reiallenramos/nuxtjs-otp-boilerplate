@@ -1,6 +1,28 @@
-version: "2"
+version: "3"
 
 services:
+  app:
+    build:
+      context: .
+      args:
+      - BUILD_MODE=development
+    command: npm run dev
+    depends_on:
+      - redis
+      - mongo
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - JWT_SECRET=thiscouldbeanything
+      - EMAIL_STRING=* # change me
+      - EMAIL_PASSWORD=* # change me
+      - REDIS_OTP_URI=redis://redis:6379
+      - OTP_DURATION=300
+      - MONGO_URI=mongodb://root:example@mongo:27017
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+      - SERVER_HOST=0.0.0.0 # change me
   redis:
     image: redis:5.0.3-alpine
     ports:
