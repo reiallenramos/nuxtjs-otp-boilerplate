@@ -1,6 +1,6 @@
-# report-brawl-stars
+# nuxtjs-otp-boilterplate
 
-> Unofficial reporting system for Brawl Stars
+> Basic JWT authentication using NuxtJS
 
 ## Build Setup
 
