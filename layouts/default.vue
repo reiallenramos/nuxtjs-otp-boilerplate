@@ -8,11 +8,6 @@
             v-icon {{ item.icon }}
           v-list-item-content
             v-list-item-title(v-text="item.title")
-      template(v-slot:append v-if="$auth.loggedIn")
-        .pa-2
-          v-btn(block @click="logout")
-            | Logout
-            v-icon mdi-logout-variant
     v-app-bar(clipped-left fixed app)
       v-app-bar-nav-icon(@click.stop="drawer = !drawer")
       v-toolbar-title(v-text="title")
@@ -53,13 +48,6 @@ export default {
         }
       ],
       title: 'NuxtJS OTP Boilerplate'
-    }
-  },
-  methods: {
-    logout() {
-      let onSuccess = () => { this.$store.commit("snackbar/setSnack", "Successfully logged out."); };
-      let onError = (res) => { this.$store.commit("snackbar/setSnack", res) };
-      this.$auth.logout().then(onSuccess, onError);
     }
   }
 }
