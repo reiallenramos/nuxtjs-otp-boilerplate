@@ -62,7 +62,8 @@ router.post('/', (req, res) => {
         }
       })
     } else {
-      res.send('Incorrect OTP');
+      res.status(401);
+      res.send({ message: 'Incorrect OTP', })
     }
   });
 })
