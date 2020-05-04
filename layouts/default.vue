@@ -19,22 +19,22 @@
       v-spacer
       div(v-if="$auth.loggedIn")
         | {{ $auth.user.email }}
-      div(v-else)
-        v-btn(text to="/login") Login
-        v-btn(text to="/register") Register
     v-content
       v-container
         nuxt
+    global-fab
     v-footer(:fixed='fixed' app)
       span &copy; {{ new Date().getFullYear() }}
 </template>
 
 <script>
 import Snackbar from '~/components/Snackbar'
+import GlobalFab from '~/components/GlobalFab'
 
 export default {
   components: {
-    Snackbar
+    Snackbar,
+    GlobalFab,
   },
   data () {
     return {
