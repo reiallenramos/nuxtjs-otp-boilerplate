@@ -1,15 +1,4 @@
-<template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    Home
-  </v-layout>
+<template lang="pug">
+  v-layout(column justify-center align-center) Welcome
 </template>
 
-<script>
-
-export default {
-}
-</script>
