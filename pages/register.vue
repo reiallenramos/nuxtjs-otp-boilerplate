@@ -1,13 +1,17 @@
 <template lang="pug">
-  v-container
-    v-form(v-model="valid" v-on:submit.prevent="")
-      h1 Register
-      v-text-field(
-        v-model="email"
-        label="Email"
-        :rules="[required('email'), emailFormat()]"
-      )
-      v-btn(@click="registerUser(email)" :disabled="!valid") Register
+  v-container.fluid
+    v-row(align="center" justify="center")
+      v-col.col-12.col-sm-8.col-md-6
+        v-row(align="center" justify="center")
+          v-col
+            v-form(v-model="valid" v-on:submit.prevent="")
+              h1 Register
+              v-text-field(
+                v-model="email"
+                label="Email"
+                :rules="[required('email'), emailFormat()]"
+              )
+              v-btn(block @click="registerUser(email)" :disabled="!valid") Register
 </template>
 
 <script>

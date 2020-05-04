@@ -1,13 +1,17 @@
 <template lang="pug">
-  v-container
-    v-form(v-model="valid" v-on:submit.prevent="")
-      h1 Validate OTP
-      v-text-field(
-        v-model="otp"
-        label="Enter OTP"
-        :rules="[required('otp'), minLength('otp', 6)]"
-      )
-      v-btn(@click="loginUser(otp)" :disabled="!valid") Login
+  v-container.fluid
+    v-row(align="center" justify="center")
+      v-col.col-12.col-sm-8.col-md-6
+        v-row(align="center" justify="center")
+          v-col
+            v-form(v-model="valid" v-on:submit.prevent="")
+              h1 Validate OTP
+              v-text-field(
+                v-model="otp"
+                label="Enter OTP"
+                :rules="[required('otp'), minLength('otp', 6)]"
+              )
+              v-btn(block @click="loginUser(otp)" :disabled="!valid") Login
 </template>
 
 <script>
