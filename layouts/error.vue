@@ -1,11 +1,17 @@
 <template lang="pug">
   v-app(dark='')
-    h1(v-if='error.statusCode === 404')
-      | {{ pageNotFound }}
-    h1(v-else='')
-      | {{ otherError }}
-    NuxtLink(to='/')
-      | Home page
+    v-content
+      v-container(fluid text-center)
+        v-img(:src="require('~/assets/404.svg')" aspect-ratio="3" contain)
+        br
+        template(v-if='error.statusCode === 404')
+          | {{ pageNotFound }}
+        template(v-else='')
+          | {{ otherError }}
+        br
+        span Click&nbsp;
+        NuxtLink(text to="/") here
+        | &nbsp;to go home.
 </template>
 
 <script>
@@ -19,7 +25,7 @@ export default {
   },
   data () {
     return {
-      pageNotFound: '404 Not Found',
+      pageNotFound: 'Uh oh! Page not found.',
       otherError: 'An error occurred'
     }
   },
