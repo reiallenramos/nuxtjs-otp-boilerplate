@@ -1,5 +1,6 @@
-let required = (propertyType) => { 
-  return v => v && v.length > 0 || `You must input a ${propertyType}`
+let required = (propertyType) => {
+  var article = (/^[aeiou]$/i).test(propertyType[0]) ? "an" : "a";
+  return v => v && v.length > 0 || `You must input ${article} ${propertyType}`
 }
 let minLength = (propertyType, minLength) => {
   return v => v && v.length >= minLength || `${propertyType} must be at least ${minLength} characters`

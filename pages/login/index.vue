@@ -1,26 +1,36 @@
 <template lang="pug">
   v-container
-    h1 Login
-    UserAuthForm(buttonText="Generate OTP" :submitForm="generateOTP")
+    v-form(v-model="valid" v-on:submit.prevent="")
+      h1 Login
+      v-text-field(
+        v-model="email"
+        label="Email"
+        :rules="[required('email'), emailFormat()]"
+      )
+      v-btn(@click="generateOTP(email)" :disabled="!valid") Generate OTP
 </template>
 
 <script>
-import UserAuthForm from '@/components/UserAuthForm'
+import validations from "@/utils/validations";
 
 export default {
-  components: {
-    UserAuthForm
+  data() {
+    return {
+      valid: false,
+      email: '',
+      ...validations
+    }
   },
   methods: {
-    generateOTP(loginInfo) {
-      this.$store.commit("setEmail", loginInfo.email);
+    generateOTP(email) {
+      this.$store.commit("setEmail", email);
       let onSuccess = (res) => {
         this.$store.commit("snackbar/setSnack", res.data);
         this.$router.push({name: 'login-otp'});
       };
       let onError = (res) => { this.$store.commit("snackbar/setSnack", res.data) };
       this.$axios.post('/api/auth/sessions/generateOTP', {
-        email: loginInfo.email
+        email: email
       })
         .then(onSuccess, onError)
     }

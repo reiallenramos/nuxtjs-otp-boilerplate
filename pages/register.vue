@@ -1,21 +1,25 @@
 <template lang="pug">
   v-container
-    v-form
-      v-text-field(v-model="email" label="email")
-      v-btn(@click="registerUser(email)") Register
+    v-form(v-model="valid" v-on:submit.prevent="")
+      h1 Register
+      v-text-field(
+        v-model="email"
+        label="Email"
+        :rules="[required('email'), emailFormat()]"
+      )
+      v-btn(@click="registerUser(email)" :disabled="!valid") Register
 </template>
 
 <script>
-import UserAuthForm from '@/components/UserAuthForm'
+import validations from "@/utils/validations";
 
 export default {
   data() {
     return {
+      valid: false,
       email: null,
+      ...validations
     }
-  },
-  components: {
-    UserAuthForm
   },
   methods: {
     registerUser() {
