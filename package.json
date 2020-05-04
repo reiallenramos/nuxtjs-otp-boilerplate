@@ -1,7 +1,7 @@
 {
-  "name": "report-brawl-stars",
+  "name": "nuxts-otp-boilerplate",
   "version": "1.0.0",
-  "description": "Unofficial reporting system for Brawl Stars",
+  "description": "Basic JWT authentication using NuxtJS",
   "author": "Rei Allen Ramos",
   "private": true,
   "scripts": {
