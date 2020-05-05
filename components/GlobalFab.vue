@@ -18,6 +18,7 @@
 <script>
   export default {
     data: () => ({
+      fab: false,
       direction: 'top',
       transition: 'slide-y-reverse-transition',
     }),
