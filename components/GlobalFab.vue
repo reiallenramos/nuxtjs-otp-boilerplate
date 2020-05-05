@@ -24,8 +24,8 @@
     }),
     methods: {
       logout() {
-        let onSuccess = () => { this.$store.commit("snackbar/setSnack", "Successfully logged out."); };
-        let onError = (res) => { this.$store.commit("snackbar/setSnack", res) };
+        let onSuccess = () => { this.$store.commit("snackbar/setSnack", this.$t('logout.toast.success')); };
+        let onError = () => { this.$store.commit("snackbar/setSnack", this.$t('logout.toast.error')) };
         this.$auth.logout().then(onSuccess, onError);
       }
     }

@@ -1,4 +1,5 @@
 const colors = require('vuetify/es5/util/colors').default
+const translations = require('./utils/locale/en/translations')
 
 module.exports = {
   mode: 'universal',
@@ -48,7 +49,19 @@ module.exports = {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    [
+      "nuxt-i18n", {
+        locales: ['en'],
+        defaultLocale: 'en',
+        vueI18n: {
+          fallbackLocale: 'en',
+          messages: {
+            en: translations.translationEn
+          }
+        }
+      }
+    ]
   ],
   /*
   ** Axios module configuration

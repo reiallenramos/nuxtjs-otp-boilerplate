@@ -5,20 +5,20 @@
         v-row(align="center" justify="center")
           v-col
             v-form(v-model="valid" v-on:submit.prevent="")
-              h1 Login
+              h1 {{ $t('login.login') }}
               v-text-field(
                 v-model="email"
-                label="Email"
+                :label="$t('email')"
                 :rules="[required('email'), emailFormat()]"
               )
-              v-btn(block @click="generateOTP(email)" :disabled="!valid") Generate OTP
+              v-btn(block @click="generateOTP(email)" :disabled="!valid") {{ $t('login.inputLabel') }}
         br
         v-divider
         br
         p.text-center.font-italic
-          | Not yet a member?&nbsp;
-          NuxtLink(text to="/register") Sign up
-          | &nbsp;now!
+          | {{$t('login.notYetAMember')}}&nbsp;
+          NuxtLink(text to="/register") {{$t('login.signUp')}}
+          | &nbsp;{{$t('login.now')}}
 </template>
 
 <script>
@@ -36,14 +36,13 @@ export default {
     generateOTP(email) {
       this.$store.commit("setEmail", email);
       let onSuccess = (res) => {
-        this.$store.commit("snackbar/setSnack", res.data);
-        this.$router.push({name: 'login-otp'});
+        this.$store.commit("snackbar/setSnack", this.$t('login.toast.success'));
+        this.$router.push(this.localePath({name:'login-otp'}));
       };
-      let onError = (res) => { this.$store.commit("snackbar/setSnack", res.data) };
+      let onError = () => { this.$store.commit("snackbar/setSnack", this.$t('login.toast.error')) };
       this.$axios.post('/api/auth/sessions/generateOTP', {
         email: email
-      })
-        .then(onSuccess, onError)
+      }).then(onSuccess, onError)
     }
   }
 }

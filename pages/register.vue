@@ -5,13 +5,13 @@
         v-row(align="center" justify="center")
           v-col
             v-form(v-model="valid" v-on:submit.prevent="")
-              h1 Register
+              h1 {{ $t('register.register') }}
               v-text-field(
                 v-model="email"
-                label="Email"
+                :label="$t('email')"
                 :rules="[required('email'), emailFormat()]"
               )
-              v-btn(block @click="registerUser(email)" :disabled="!valid") Register
+              v-btn(block @click="registerUser(email)" :disabled="!valid") {{ $t('register.register') }}
 </template>
 
 <script>
@@ -27,8 +27,9 @@ export default {
   },
   methods: {
     registerUser() {
-      let onSuccess = () => { this.$store.commit("snackbar/setSnack", "Success. Please Login.") };
-      let onError = () => { this.$store.commit("snackbar/setSnack", "Invalid email.") };
+      let onSuccess = () => { this.$store.commit("snackbar/setSnack", this.$t('register.toast.success')) };
+      let onError = () => { this.$store.commit("snackbar/setSnack", this.$t('register.toast.error')) };
+
       this.$axios.post('/api/register', {
         email: this.email
       }).then(onSuccess, onError)

@@ -38,16 +38,16 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: this.$t('greeting'),
           to: '/'
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
+          title: this.$t('inspire'),
           to: '/inspire'
         }
       ],
-      title: 'NuxtJS OTP Boilerplate'
+      title: this.$t('appTitle')
     }
   }
 }
