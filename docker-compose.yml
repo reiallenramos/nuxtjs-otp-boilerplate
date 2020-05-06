@@ -6,7 +6,7 @@ services:
       context: .
       args:
       - BUILD_MODE=development
-    command: npm run dev
+    command: npm run nuxt-dev
     depends_on:
       - redis
       - mongo
