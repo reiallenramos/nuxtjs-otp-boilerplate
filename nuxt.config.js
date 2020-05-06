@@ -1,11 +1,9 @@
 const colors = require('vuetify/es5/util/colors').default
 const translations = require('./utils/locale/en/translations')
+require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
-  server: {
-    host: process.env.HOST
-  },
   /*
   ** Headers of the page
   */

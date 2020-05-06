@@ -17,6 +17,7 @@
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/dotenv": "^1.4.0",
+    "@nuxtjs/vuetify": "^1.0.0",
     "body-parser": "^1.19.0",
     "concurrently": "^5.2.0",
     "cross-env": "^5.2.0",
@@ -32,7 +33,6 @@
     "redis": "^3.0.2"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0",
     "nodemon": "^1.18.9",
     "pug": "^2.0.4",
     "pug-plain-loader": "^1.0.0"

@@ -6,6 +6,9 @@ ARG BUILD_MODE
 RUN mkdir -p /usr/src/nuxt-app
 WORKDIR /usr/src/nuxt-app
 
+# install dependencies
+RUN apk update && apk add python make g++
+
 EXPOSE 3000
 
 ENV HOST 0.0.0.0
