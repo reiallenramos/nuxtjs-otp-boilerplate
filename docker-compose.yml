@@ -18,6 +18,7 @@ services:
       - EMAIL_STRING=* # change me
       - EMAIL_PASSWORD=* # change me
       - REDIS_OTP_URI=redis://redis:6379
+      - DEFAULT_OTP=123123
       - OTP_DURATION=300
       - MONGO_URI=mongodb://root:example@mongo:27017
       - MONGO_INITDB_ROOT_USERNAME=root

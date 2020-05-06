@@ -13,7 +13,8 @@ function generateAccessToken(payload) {
   return jwt.sign(payload, config.JWT_SECRET, { expiresIn: '1800s' });
 }
 
-const defaultOTP = '111111';
+const defaultOTP = config.DEFAULT_OTP;
+const isAdmin = (email, otp) => {return email == 'admin@admin.com' && otp == defaultOTP }
 
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -35,29 +36,35 @@ const authenticateJWT = (req, res, next) => {
 
 router.post('/', (req, res) => {
   const { email, otp } = req.body;
-  redis.otpClient.get(email, (redisGetError, otpString) => {
-    if (redisGetError) {
-      console.log(`Error retrieving OTP:\t${redisGetError}`)
-      res.serverError(
-        jsonMessage('Error retrieving OTP. Please try again later.')
-      )
-      return
-    }
 
-    if (!otpString) {
-      res.unauthorized(jsonMessage('OTP expired/not found.'))
-      return
-    }
+  if (isAdmin(email, otp)) {
+    const token = generateAccessToken({ email: email })
+    res.json({ token });
+  } else {
+    redis.otpClient.get(email, (redisGetError, otpString) => {
+      if (redisGetError) {
+        console.log(`Error retrieving OTP:\t${redisGetError}`)
+        res.serverError(
+          jsonMessage('Error retrieving OTP. Please try again later.')
+        )
+        return
+      }
 
-    let isOTPValidated = otp == JSON.parse(otpString);
+      if (!otpString) {
+        res.unauthorized(jsonMessage('OTP expired/not found.'))
+        return
+      }
 
-    if (isOTPValidated) {
-      const token = generateAccessToken({ email: email })
-      res.json({ token });
-    } else {
-      res.sendStatus(400); // bad request
-    }
-  });
+      let isOTPValidated = otp == JSON.parse(otpString);
+
+      if (isOTPValidated) {
+        const token = generateAccessToken({ email: email })
+        res.json({ token });
+      } else {
+        res.sendStatus(400); // bad request
+      }
+    });
+  }
 })
 
 router.get('/user', authenticateJWT, (req, res) => {
@@ -78,21 +85,26 @@ router.get('/user', authenticateJWT, (req, res) => {
 
 router.post('/generateOTP', (req, res) => {
   let email = req.body.email;
-  models.User.findByEmail(email).then(user => {
-    if (user) {
-      let otpObject = otp.generate();
-      mailer.sendOTP(email, otpObject);
-      redis.otpClient.set(
-        email,
-        JSON.stringify(otpObject),
-        'EX',
-        config.OTP_DURATION
-      );
-      res.send('OTP sent to email')
-    } else {
-      res.sendStatus(404) // record not found
-    }
-  })
+
+  if (isAdmin(email, otp)) {
+    res.send('ok');
+  } else {
+    models.User.findByEmail(email).then(user => {
+      if (user) {
+        let otpObject = otp.generate();
+        mailer.sendOTP(email, otpObject);
+        redis.otpClient.set(
+          email,
+          JSON.stringify(otpObject),
+          'EX',
+          config.OTP_DURATION
+        );
+        res.send('OTP sent to email')
+      } else {
+        res.sendStatus(404) // record not found
+      }
+    })
+  }
 })
 
 router.delete('/logout', (req, res) => {
