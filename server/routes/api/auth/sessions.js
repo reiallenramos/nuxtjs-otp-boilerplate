@@ -4,12 +4,12 @@ const mailer = require('../../../util/email')
 const otp = require('../../../util/otp')
 const redis = require('../../../redis')
 const config = require('../../../config')
-const db = require('../../../db')
+const models = require('../../../models')
 
 const router= express.Router();
 
 function generateAccessToken(payload) {
-  // expires after half and hour (1800 seconds = 30 minutes)
+  // expires after half an hour (1800 seconds = 30 minutes)
   return jwt.sign(payload, config.JWT_SECRET, { expiresIn: '1800s' });
 }
 
@@ -29,7 +29,7 @@ const authenticateJWT = (req, res, next) => {
       next();
     });
   } else {
-    res.sendStatus(401);
+    res.sendStatus(401); // unauthorized
   }
 };
 
@@ -52,45 +52,47 @@ router.post('/', (req, res) => {
     let isOTPValidated = otp == JSON.parse(otpString);
 
     if (isOTPValidated) {
-      db.findDocuments('users_directory', (users) => {
-        const user = users.find(u => { return u.email === email });
-        if (user) {
-          const token = generateAccessToken({ email: email })
-          res.json({ token });
-        } else {
-          res.send('User not found. Please register')
-        }
-      })
+      const token = generateAccessToken({ email: email })
+      res.json({ token });
     } else {
-      res.status(401);
-      res.send({ message: 'Incorrect OTP', })
+      res.sendStatus(400); // bad request
     }
   });
 })
 
 router.get('/user', authenticateJWT, (req, res) => {
   const { email } = req.user;
-  db.findDocuments('users_directory', (users) => {
-    const user = users.find(u => { return u.email === email});
-    res.send({
-      user: {
-        email: user.email
-      }
-    })
-  });
+
+  models.User.findByEmail(email).then(user => {
+    if(user) {
+      res.send({
+        user: {
+          email: user.email
+        }
+      })
+    } else {
+      res.sendStatus(404) // user not found
+    }
+  })
 })
 
 router.post('/generateOTP', (req, res) => {
   let email = req.body.email;
-  let otpObject = otp.generate();
-  mailer.sendOTP(email, otpObject);
-  redis.otpClient.set(
-    email,
-    JSON.stringify(otpObject),
-    'EX',
-    config.OTP_DURATION
-    );
-  res.send('OTP sent to email')
+  models.User.findByEmail(email).then(user => {
+    if (user) {
+      let otpObject = otp.generate();
+      mailer.sendOTP(email, otpObject);
+      redis.otpClient.set(
+        email,
+        JSON.stringify(otpObject),
+        'EX',
+        config.OTP_DURATION
+      );
+      res.send('OTP sent to email')
+    } else {
+      res.sendStatus(404) // record not found
+    }
+  })
 })
 
 router.delete('/logout', (req, res) => {

@@ -9,17 +9,15 @@ const userSchema = new mongoose.Schema(
     },
   }, {
     timestamps: true,
-  },
+  }, {
+    collections: 'users'
+  }
 );
 
-userSchema.statics.findByLogin = async function (email) {
+userSchema.statics.findByEmail = async function (email) {
   let user = await this.findOne({
     email: email,
   });
-
-  if (!user) {
-    user = await this.findOne({ email: email });
-  }
 
   return user;
 };

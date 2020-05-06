@@ -4,7 +4,8 @@ const morgan = require('morgan')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const bodyParser = require('body-parser');
-const db = require('./db')
+const models = require('./models')
+const seeds = require('./seeds.json')
 
 app.use(bodyParser.json());
 
@@ -19,8 +20,6 @@ const register = require('./routes/register');
 
 app.use('/api/auth/sessions', sessions);
 app.use('/api/register', register);
-
-db.dbInit();
 
 async function start () {
   // Init Nuxt.js
@@ -38,11 +37,26 @@ async function start () {
   // Give nuxt middleware to express
   app.use(nuxt.render)
 
-  // Listen the server
-  app.listen(port, host)
-  consola.ready({
-    message: `Server listening on http://${host}:${port}`,
-    badge: true
-  })
+  models.connectDb().then(async () => {
+    if(process.env.NODE_ENV !== 'production')  { seedUsers() }
+
+    // Listen the server
+    app.listen(port, host)
+    consola.ready({
+      message: `Server listening on http://${host}:${port}`,
+      badge: true
+    })
+  });
 }
 start()
+
+const seedUsers = function() {
+  seeds.users.forEach(async user => {
+    try {
+      const u = new models.User(user);
+      await u.save();
+    } catch {
+      console.log(`email already exists: ${user.email}`)
+    }
+  })
+}
