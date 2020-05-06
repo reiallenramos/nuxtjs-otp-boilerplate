@@ -1,50 +1,54 @@
-const MongoClient = require('mongodb').MongoClient
+// const MongoClient = require('mongodb').MongoClient
+const mongoose = require('mongoose')
 const config = require('./config')
-const url = config.MONGO_URI;
 
-function dbInit() {
-  MongoClient.connect(url, function (err, client) {
-    if (err) throw err
+await mongoose.connect(url)
 
-    var db = client.db('users_directory')
+const User = mongoose.model('User', userSchema);
 
-    db.collection('users').find().toArray(function (err, result) {
-      if (err) throw err
+// function dbInit() {
+//   MongoClient.connect(url, function (err, client) {
+//     if (err) throw err
 
-      console.log('MongoDB initialized!')
-      client.close();
-    })
-  })
-}
+//     var db = client.db('users_directory')
 
-const findDocuments = function(db, callback) {
-  MongoClient.connect(url, function (err, client) {
-    if (err) throw err
+//     db.collection('users').find().toArray(function (err, result) {
+//       if (err) throw err
 
-    const collection = client.db(db).collection('users');
-    collection.find({}).toArray(function(err, docs) {
-      client.close();
-      callback(docs);
-    });
-  });
-}
+//       console.log('MongoDB initialized!')
+//       client.close();
+//     })
+//   })
+// }
 
-function addUser(email) {
-  MongoClient.connect(url, function (err, client) {
-    if (err) throw err;
+// const findDocuments = function(db, callback) {
+//   MongoClient.connect(url, function (err, client) {
+//     if (err) throw err
 
-    var db = client.db('users_directory');
-    var newUser = { email: email };
-    db.collection('users').insertOne(newUser, (err, res) => {
-      if (err) throw err;
-      console.log(`1 document inserted: ${email}`);
-      client.close();
-    })
-  })
-}
+//     const collection = client.db(db).collection('users');
+//     collection.find({}).toArray(function(err, docs) {
+//       client.close();
+//       callback(docs);
+//     });
+//   });
+// }
+
+// function addUser(email) {
+//   MongoClient.connect(url, function (err, client) {
+//     if (err) throw err;
+
+//     var db = client.db('users_directory');
+//     var newUser = { email: email };
+//     db.collection('users').insertOne(newUser, (err, res) => {
+//       if (err) throw err;
+//       console.log(`1 document inserted: ${email}`);
+//       client.close();
+//     })
+//   })
+// }
 
 module.exports = {
   dbInit,
-  findDocuments,
-  addUser,
+  // findDocuments,
+  // addUser,
 }
