@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const DEFAULT_OTP = process.env.DEFAULT_OTP;
 const OTP_DURATION = Number(process.env.OTP_DURATION) || 5 * 60;
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_DURATION = process.env.JWT_SECRET;
@@ -14,6 +15,7 @@ const MONGO_INITDB_ROOT_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD;
 const HOST = process.env.HOST;
 
 module.exports = {
+  DEFAULT_OTP,
   OTP_DURATION,
   JWT_SECRET,
   JWT_DURATION,

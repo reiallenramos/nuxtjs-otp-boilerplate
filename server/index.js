@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 const bodyParser = require('body-parser');
-const db = require('./db')
+const models = require('./models')
 
 app.use(bodyParser.json());
 
@@ -19,8 +19,6 @@ const register = require('./routes/register');
 
 app.use('/api/auth/sessions', sessions);
 app.use('/api/register', register);
-
-db.dbInit();
 
 async function start () {
   // Init Nuxt.js
@@ -38,11 +36,13 @@ async function start () {
   // Give nuxt middleware to express
   app.use(nuxt.render)
 
-  // Listen the server
-  app.listen(port, host)
-  consola.ready({
-    message: `Server listening on http://${host}:${port}`,
-    badge: true
-  })
+  models.connectDb().then(async () => {
+    // Listen the server
+    app.listen(port, host)
+    consola.ready({
+      message: `Server listening on http://${host}:${port}`,
+      badge: true
+    })
+  });
 }
 start()
