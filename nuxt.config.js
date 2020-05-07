@@ -1,6 +1,5 @@
 const colors = require('vuetify/es5/util/colors').default
 const translations = require('./utils/locale/en/translations')
-require('dotenv').config()
 
 module.exports = {
   mode: 'universal',
@@ -66,7 +65,7 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: `http://${process.env.HOST}:3000/`
+    baseURL: process.env.baseURL
   },
   /*
   ** vuetify module configuration
