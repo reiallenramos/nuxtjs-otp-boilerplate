@@ -31,6 +31,7 @@ const translationEn = {
     }
   },
   logout: {
+    logout: 'Logout',
     toast: {
       success: "Successfully logged out.",
       error: "Something went wrong."
