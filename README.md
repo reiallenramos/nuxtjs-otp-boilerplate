@@ -37,7 +37,7 @@ The project minimally requires the following to be available:
  - a MongoDB database for storing emails
  - a Redis server for storing email-OTP mappings
 
-To streamline development, we've configured `docker-compose.yml` to fire up three extra services: mongo, mongo-express and redis. `mongo-express` docker image provides a UI for managing our database.
+To streamline development, we've configured `docker-compose.yml` to fire up three extra services: mongo, mongo-express and redis. `mongo-express` provides a UI for managing our database.
 
 ### Running locally: option 1 (preferred)
 
