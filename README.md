@@ -47,6 +47,7 @@ npm run storage-dev
 
 > Tip: If you also prefer a UI to view redis keys, we recommend using [marian/rebrow](https://hub.docker.com/r/marian/rebrow/)
 2. start the app
+Create a `.env` file in the root directory and provide the [required environment variables](#environment-variables).
 ```bash
 npm run nuxt-dev
 ```
@@ -78,5 +79,5 @@ npm run docker-dev
   - [ ] update docker-compose.yml
   - [ ] es-lint
   - [ ] write tests
-  - [ ] create gmail for demo
+  - [x] create gmail for demo
   - [ ] gitlab workflow (?)
