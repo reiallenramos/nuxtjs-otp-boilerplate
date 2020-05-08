@@ -45,7 +45,7 @@ npm run storage-dev
 
 > Tip: If you also prefer a UI to view redis keys, we recommend using [marian/rebrow](https://hub.docker.com/r/marian/rebrow/)
 2. start the app
-Create a `.env` file in the root directory and provide the [required environment variables](#environment-variables).
+Rename `.env.example` to `.env` then provide the [required environment variables](#environment-variables).
 ```bash
 npm run nuxt-dev
 ```
@@ -64,7 +64,7 @@ npm run docker-dev
 |JWT_SECRET|YES|For generating token, ex: `thiscouldbeanything`
 |EMAIL_STRING|YES|Used by nodemailer as the sender email. Accepts only Gmail for now|
 |EMAIL_PASSWORD|YES|Used by nodemailer as the sender password. If the account uses 2FA, you need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en). If not, you need to [enable Less Secure Apps](https://support.google.com/accounts/answer/6010255?hl=en).
-|REDIS_OTP_URI|YES|For storing email-otp mappings, ex:`redis://redis:6379`
+|REDIS_OTP_URI|NO|For storing email-otp mappings, ex:`redis://redis:6379/1`, default: `redis://localhost:6379/0`
 |OTP_DURATION|NO|For how long Redis will keep email-otp mapping, ex: `300` seconds, default: `300` seconds
 |MONGO_URI|YES|For storing email registrations, ex `mongodb://root:example@mongo:27017`
 
