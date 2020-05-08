@@ -64,12 +64,13 @@ npm run docker-dev
 
 |Environment variable|Required|Description/Value|
 |:-:|:-:|:-:|
-|JWT_SECRET|YES|For generating token, ex: `thiscouldbeanything`
+|MONGO_URI|YES|For storing email registrations, ex: `mongodb://root:example@mongo:27017`|
+|JWT_DURATION|NO|For how long to keep JWT token alive, ex: `1800`, default: `1800` seconds or 30 minutes|
+|JWT_SECRET|YES|For generating token, ex: `thiscouldbeanything`|
 |EMAIL_STRING|YES|Used by nodemailer as the sender email. Accepts only Gmail for now|
-|EMAIL_PASSWORD|YES|Used by nodemailer as the sender password. If the account uses 2FA, you need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en). If not, you need to [enable Less Secure Apps](https://support.google.com/accounts/answer/6010255?hl=en).
-|REDIS_OTP_URI|NO|For storing email-otp mappings, ex:`redis://redis:6379/1`, default: `redis://localhost:6379/0`
-|OTP_DURATION|NO|For how long Redis will keep email-otp mapping, ex: `300` seconds, default: `300` seconds
-|MONGO_URI|YES|For storing email registrations, ex `mongodb://root:example@mongo:27017`
+|EMAIL_PASSWORD|YES|Used by nodemailer as the sender password. If the account uses 2FA, you need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en). If not, you need to [enable Less Secure Apps](https://support.google.com/accounts/answer/6010255?hl=en).|
+|REDIS_OTP_URI|NO|For storing email-otp mappings, ex:`redis://redis:6379/1`, default: `redis://localhost:6379/0`|
+|OTP_DURATION|NO|For how long Redis will keep email-otp mapping, ex: `300` seconds, default: `300` seconds|
 
 # Publishing (optional)
 We deployed this project in the [demo website](#demo) by building a docker image then using docker-compose in an AWS Lightsail instance.
