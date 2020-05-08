@@ -45,6 +45,7 @@ To streamline development, we've configured `docker-compose.yml` to fire up thre
 ```bash
 npm run storage-dev
 ```
+Visit http://localhost:8081/ to manage your database.
 
 > Tip: If you also prefer a UI to view redis keys, we recommend using [marian/rebrow](https://hub.docker.com/r/marian/rebrow/)
 2. start the app
