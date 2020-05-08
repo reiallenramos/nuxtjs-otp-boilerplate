@@ -13,8 +13,7 @@ function generateAccessToken(payload) {
   return jwt.sign(payload, config.JWT_SECRET, { expiresIn: '1800s' });
 }
 
-const defaultOTP = config.DEFAULT_OTP;
-const isAdmin = (email, otp) => {return email == 'admin@admin.com' && otp == defaultOTP }
+const isAdmin = (email, otp) => {return email == 'admin@admin.com'}
 
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;

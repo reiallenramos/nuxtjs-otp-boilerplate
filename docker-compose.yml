@@ -15,14 +15,9 @@ services:
     environment:
       - NODE_ENV=development
       - JWT_SECRET=thiscouldbeanything
-      - EMAIL_STRING=* # change me
-      - EMAIL_PASSWORD=* # change me
-      - REDIS_OTP_URI=redis://redis:6379
-      - DEFAULT_OTP=123123
+      - REDIS_OTP_URI=redis://redis:6379/0
       - OTP_DURATION=300
       - MONGO_URI=mongodb://root:example@mongo:27017
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
       - HOST=0.0.0.0
   redis:
     image: redis:5.0.3-alpine
