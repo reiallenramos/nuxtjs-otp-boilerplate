@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setEmail (state, email) {
-    state.email = email;
-  }
+  setEmail(state, email) {
+    state.email = email
+  },
 }
