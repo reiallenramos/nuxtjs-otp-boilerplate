@@ -3,8 +3,13 @@
 ## Introduction
 A project aimed to eliminate several architecture decisions. This boilerplate comes with NuxtJS, ExpressJS, Vuetify, Vuex, nodemailer, and jsonwebtoken.
 
+
+## System diagram
+
+![](assets/system_diagram.png)
+
 ## Features
-### Register
+### Registration
   - Register with an email address to be saved in MongoDB.
 ### Login
   - If the email is valid, an OTP will be generated and stored in Redis for 5 minutes. The OTP is also sent to the registered email. If it's a match, Express will return a JWT token that Nuxt saves in the browser storage and cookies. Tokens are valid for 30 mins by default.
@@ -19,13 +24,11 @@ A project aimed to eliminate several architecture decisions. This boilerplate co
   
 ## Getting started
 ```bash
-# Clone the repository
-git clone git@github.com:opengovsg/GoGovSG.git gogovsg
-
-# Go inside the directory
-cd gogovsg
+# Clone this repository
+git clone git@github.com:reiallenramos/nuxtjs-otp-boilerplate.git my_app
 
 # Install dependencies
+cd my_app
 npm install
 ```
 
@@ -54,7 +57,7 @@ Run both commands using `concurrently`
 ```bash
 npm run docker-dev
 ```
-> Warning about race condition: The `nuxt-dev` command requires the Redis server and MongoDB database to be ready. If not, it will fail on startup. We're working on making them resilient but for now, the preferred way to run locally is option 1.
+> Warning about race condition: The `nuxt-dev` command requires MongoDB to be ready. If not, it will fail on startup. We're working on making it resilient but for now, the preferred way to run locally is option 1.
 
 
 ## Environment variables
@@ -68,10 +71,20 @@ npm run docker-dev
 |OTP_DURATION|NO|For how long Redis will keep email-otp mapping, ex: `300` seconds, default: `300` seconds
 |MONGO_URI|YES|For storing email registrations, ex `mongodb://root:example@mongo:27017`
 
+# Publishing (optional)
+We deployed this project in the [demo website](#demo) by building a docker image then using docker-compose in an AWS Lightsail instance.
 
-## System diagram
+```bash
+# format
+docker build -t your_image_name:version .
 
-![](assets/system_diagram.png)
+# example
+docker build -t reiallenramos/nuxtjs-otp-boilerplate:latest .
+docker build -t reiallenramos/nuxtjs-otp-boilerplate:vX.X.X .
+
+docker push reiallenramos/nuxtjs-otp-boilerplate:latest
+docker push reiallenramos/nuxtjs-otp-boilerplate:vX.X.X
+```
 
 ## To-do:
   - [ ] update docker-compose.yml
@@ -79,3 +92,4 @@ npm run docker-dev
   - [ ] write tests
   - [x] create gmail for demo
   - [ ] gitlab workflow (?)
+  - [ ] resilient MongoDB connection
