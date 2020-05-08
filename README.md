@@ -15,9 +15,7 @@ A project aimed to eliminate several architecture decisions. This boilerplate co
 [Try the demo here!](http://3.1.243.203/)
 
 ## Requirements
-  - docker, docker-compose
-  - redis URI
-  - mongoDB URI
+  - npm, docker, docker-compose
   
 ## Getting started
 ```bash
