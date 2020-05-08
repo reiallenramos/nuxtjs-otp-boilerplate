@@ -1,24 +1,24 @@
-<template lang="pug">
+<template lang='pug'>
   v-container.fluid
-    v-row(align="center" justify="center")
+    v-row(align='center' justify='center')
       v-col.col-12.col-sm-8.col-md-6
-        v-row(align="center" justify="center")
+        v-row(align='center' justify='center')
           v-col
-            v-form(v-model="valid" v-on:submit.prevent="")
+            v-form(v-model='valid' v-on:submit.prevent='')
               h1 {{ $t('register.register') }}
               v-text-field(
-                v-model="email"
+                v-model='email'
                 :label="$t('email')"
                 :rules="[required('email'), emailFormat()]"
               )
-              v-btn(block @click="registerUser(email)" :disabled="!valid") {{ $t('register.register') }}
+              v-btn(block @click='registerUser(email)' :disabled='!valid') {{ $t('register.register') }}
 </template>
 
 <script>
-import validations from "@/utils/validations";
+import validations from '@/utils/validations'
 
 export default {
-  data() {
+  data () {
     return {
       valid: false,
       email: null,
@@ -26,13 +26,15 @@ export default {
     }
   },
   methods: {
-    registerUser() {
-      let onSuccess = () => { this.$store.commit("snackbar/setSnack", this.$t('register.toast.success')) };
-      let onError = () => { this.$store.commit("snackbar/setSnack", this.$t('register.toast.error')) };
+    registerUser () {
+      const onError = () => { this.$store.commit('snackbar/setSnack', this.$t('register.toast.error')) }
+      const onSuccess = () => { this.$store.commit('snackbar/setSnack', this.$t('register.toast.success')) }
 
-      this.$axios.post('/api/register', {
-        email: this.email
-      }).then(onSuccess, onError)
+      this.$axios
+        .post('/api/register', {
+          email: this.email
+        })
+        .then(onSuccess, onError)
     }
   }
 }

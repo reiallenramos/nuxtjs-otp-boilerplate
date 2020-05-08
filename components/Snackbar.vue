@@ -1,16 +1,16 @@
-<template lang="pug">
-  v-snackbar(v-model="show" :bottom="true") {{ message }}
+<template lang='pug'>
+  v-snackbar(v-model='show' :bottom='true') {{ message }}
 </template>
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       show: false,
-      message: '',
+      message: ''
     }
   },
-  created: function () {
+  created () {
     this.$store.watch(state => state.snackbar.snack, () => {
       const msg = this.$store.state.snackbar.snack
       if (msg !== '') {

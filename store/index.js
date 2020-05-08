@@ -1,9 +1,9 @@
 export const state = () => ({
-  email: null,
+  email: null
 })
 
 export const mutations = {
-  setEmail(state, email) {
+  setEmail (state, email) {
     state.email = email
-  },
+  }
 }

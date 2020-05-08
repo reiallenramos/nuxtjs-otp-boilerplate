@@ -1,24 +1,24 @@
-<template lang="pug">
+<template lang='pug'>
   v-container.fluid
-    v-row(align="center" justify="center")
+    v-row(align='center' justify='center')
       v-col.col-12.col-sm-8.col-md-6
-        v-row(align="center" justify="center")
+        v-row(align='center' justify='center')
           v-col
-            v-form(v-model="valid" v-on:submit.prevent="")
+            v-form(v-model='valid' v-on:submit.prevent='')
               h1 {{ $t('otp.validate') }}
               v-text-field(
-                v-model="otp"
+                v-model='otp'
                 :label="$t('otp.inputLabel')"
                 :rules="[required('otp'), minLength('otp', 6)]"
               )
-              v-btn(block @click="loginUser(otp)" :disabled="!valid") {{ $t('otp.login') }}
+              v-btn(block @click='loginUser(otp)' :disabled='!valid') {{ $t('otp.login') }}
 </template>
 
 <script>
-import validations from "@/utils/validations";
+import validations from '@/utils/validations'
 
 export default {
-  data() {
+  data () {
     return {
       valid: false,
       otp: '',
@@ -26,21 +26,23 @@ export default {
     }
   },
   computed: {
-    email() {
-      return this.$store.state.email;
+    email () {
+      return this.$store.state.email
     }
   },
   methods: {
-    loginUser(otp) {
-      let onSuccess = () => { this.$store.commit("snackbar/setSnack", this.$t('otp.toast.success')) };
-      let onError = () => { this.$store.commit("snackbar/setSnack", this.$t('otp.toast.error')) };
-      this.$auth.loginWith('local', {
-        data: {
-          otp: otp,
-          email: this.email
-        }
-      }).then(onSuccess, onError);
-    },
+    loginUser (otp) {
+      const onSuccess = () => { this.$store.commit('snackbar/setSnack', this.$t('otp.toast.success')) }
+      const onError = () => { this.$store.commit('snackbar/setSnack', this.$t('otp.toast.error')) }
+      this.$auth
+        .loginWith('local', {
+          data: {
+            email: this.email,
+            otp
+          }
+        })
+        .then(onSuccess, onError)
+    }
   }
 }
 </script>

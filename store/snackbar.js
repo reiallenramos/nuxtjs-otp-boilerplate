@@ -1,9 +1,9 @@
 export const state = () => ({
-  snack: "",
+  snack: ''
 })
 
 export const mutations = {
-  setSnack(state, snack) {
+  setSnack (state, snack) {
     state.snack = snack
-  },
+  }
 }
