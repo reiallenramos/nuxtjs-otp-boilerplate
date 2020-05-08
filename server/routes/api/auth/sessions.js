@@ -9,8 +9,7 @@ const models = require('../../../models')
 const router= express.Router();
 
 function generateAccessToken(payload) {
-  // expires after half an hour (1800 seconds = 30 minutes)
-  return jwt.sign(payload, config.JWT_SECRET, { expiresIn: '1800s' });
+  return jwt.sign(payload, config.JWT_SECRET, { expiresIn: `${config.JWT_DURATION}s` });
 }
 
 const isAdmin = (email, otp) => {return email == 'admin@admin.com'}
