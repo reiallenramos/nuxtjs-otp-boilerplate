@@ -31,21 +31,44 @@ cd gogovsg
 npm install
 ```
 
-## Build Setup
-To streamline development, we've configured `docker-compose.yml` to fire up two extra services: mongo and redis.
+## Running locally
+The project minimally requires the following to be available:
+ - a MongoDB database for storing emails
+ - a Redis server for storing email-OTP mappings
+
+To streamline development, we've configured `docker-compose.yml` to fire up three extra services: mongo, mongo-express and redis. `mongo-express` docker image provides a UI for managing our database.
+
+### Running locally: option 1 (preferred)
 
 1. start the storage services:
 ```bash
 npm run storage-dev
 ```
+
+> Tip: If you also prefer a UI to view redis keys, we recommend using [marian/rebrow](https://hub.docker.com/r/marian/rebrow/)
 2. start the app
 ```bash
 npm run nuxt-dev
 ```
+### Running locally: option 2
+Run both commands using `concurrently`
+```bash
+npm run docker-dev
+```
+> Warning about race condition: The `nuxt-dev` command requires the Redis server and MongoDB database to be ready. If not, it will fail on startup. We're working on making them resilient but for now, the preferred way to run locally is option 1.
+
 
 ## Environment variables
-The nodemailer is configured to use gmail (for now).
-|
+
+|Environment variable|Required|Description/Value|
+|:-:|:-:|:-:|
+|JWT_SECRET|YES|For generating token, ex: `thiscouldbeanything`
+|EMAIL_STRING|YES|Used by nodemailer as the sender email. Accepts only Gmail for now|
+|EMAIL_PASSWORD|YES|Used by nodemailer as the sender password. If the account uses 2FA, you need to [generate an App Password](https://support.google.com/accounts/answer/185833?hl=en). If not, you need to [enable Less Secure Apps](https://support.google.com/accounts/answer/6010255?hl=en).
+|REDIS_OTP_URI|YES|For storing email-otp mappings, ex:`redis://redis:6379`
+|OTP_DURATION|NO|For how long Redis will keep email-otp mapping, ex: `300` seconds, default: `300` seconds
+|MONGO_URI|YES|For storing email registrations, ex `mongodb://root:example@mongo:27017`
+
 
 ## System diagram
 
