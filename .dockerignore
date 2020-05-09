@@ -2,3 +2,4 @@ node_modules
 .nuxt
 redis_rebrow_notes
 dev_notes
+.git

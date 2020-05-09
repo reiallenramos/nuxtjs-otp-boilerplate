@@ -89,6 +89,9 @@ sw.*
 # Vim swap files
 *.swp
 
+# git folder
+.git
+
 # My notes
 redis_rebrow_notes
 dev_notes
